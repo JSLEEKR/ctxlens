@@ -1,0 +1,5 @@
+{"role": "system", "content": "You are a helpful assistant.", "model": "claude-sonnet-4"}
+{"role": "user", "content": "Hello, how are you?"}
+{"role": "assistant", "content": "I'm doing well! How can I help you today?"}
+{"role": "user", "content": "Tell me about Go programming."}
+{"role": "assistant", "content": "Go (or Golang) is a statically typed, compiled programming language designed by Google. It features:\n\n1. Simple syntax\n2. Built-in concurrency with goroutines\n3. Fast compilation\n4. Garbage collection\n5. Strong standard library"}

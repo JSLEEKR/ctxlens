@@ -1,0 +1,48 @@
+{
+  "model": "claude-sonnet-4",
+  "system": "You are a helpful coding assistant. You help developers write clean, efficient code.",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Can you help me write a function to sort an array?"
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "Sure! Here's a quicksort implementation:\n\n```python\ndef quicksort(arr):\n    if len(arr) <= 1:\n        return arr\n    pivot = arr[len(arr) // 2]\n    left = [x for x in arr if x < pivot]\n    middle = [x for x in arr if x == pivot]\n    right = [x for x in arr if x > pivot]\n    return quicksort(left) + middle + quicksort(right)\n```\n\nThis has O(n log n) average time complexity."
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "content": "Can you also add a merge sort?"
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "Here's a merge sort implementation:"
+        },
+        {
+          "type": "tool_use",
+          "id": "tool_1",
+          "name": "write_file",
+          "input": {"path": "sort.py", "content": "def merge_sort(arr):\n    if len(arr) <= 1:\n        return arr\n    mid = len(arr) // 2\n    left = merge_sort(arr[:mid])\n    right = merge_sort(arr[mid:])\n    return merge(left, right)\n\ndef merge(left, right):\n    result = []\n    i = j = 0\n    while i < len(left) and j < len(right):\n        if left[i] <= right[j]:\n            result.append(left[i])\n            i += 1\n        else:\n            result.append(right[j])\n            j += 1\n    result.extend(left[i:])\n    result.extend(right[j:])\n    return result"}
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "tool_result",
+          "tool_use_id": "tool_1",
+          "content": "File written successfully to sort.py"
+        }
+      ]
+    }
+  ]
+}

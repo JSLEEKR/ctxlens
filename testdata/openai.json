@@ -1,0 +1,36 @@
+{
+  "model": "gpt-4o",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are a helpful assistant specialized in Python programming."
+    },
+    {
+      "role": "user",
+      "content": "Write me a fibonacci function."
+    },
+    {
+      "role": "assistant",
+      "content": "Here is a fibonacci function:\n\n```python\ndef fibonacci(n):\n    if n <= 1:\n        return n\n    return fibonacci(n-1) + fibonacci(n-2)\n```",
+      "tool_calls": [
+        {
+          "id": "call_abc123",
+          "type": "function",
+          "function": {
+            "name": "run_code",
+            "arguments": "{\"code\": \"print(fibonacci(10))\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "call_abc123",
+      "content": "55"
+    },
+    {
+      "role": "assistant",
+      "content": "The fibonacci of 10 is 55."
+    }
+  ]
+}
