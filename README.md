@@ -39,12 +39,12 @@ Est. Cost: $0.135 (anthropic claude-sonnet-4 @ input pricing)
 
 Category           Tokens      %      Cost   Bar
 ------------------  --------  ------  --------   --------------------
-System Prompt          8,200  18.1%  $ 0.025   ||||||||............
-User Messages          5,400  11.9%  $ 0.016   ||||||..............
-Assistant Msgs         7,800  17.2%  $ 0.023   |||||||||...........
-Tool Calls             1,200   2.7%  $ 0.004   |...................
-Tool Results          18,430  40.8%  $ 0.055   ||||||||||||||||||||.
-Code Blocks            4,200   9.3%  $ 0.013   |||||...............
+System Prompt          8,200  18.1%  $ 0.025   ███░░░░░░░░░░░░░░░░░
+User Messages          5,400  11.9%  $ 0.016   ██░░░░░░░░░░░░░░░░░░
+Assistant Msgs         7,800  17.2%  $ 0.023   ███░░░░░░░░░░░░░░░░░
+Tool Calls             1,200   2.7%  $ 0.004   ░░░░░░░░░░░░░░░░░░░░
+Tool Results          18,430  40.8%  $ 0.055   ████████░░░░░░░░░░░░
+Code Blocks            4,200   9.3%  $ 0.013   █░░░░░░░░░░░░░░░░░░░
 
 Top Segments:
   1. tool_result (web_search)              6,200 tokens
@@ -76,7 +76,7 @@ go install ./cmd/ctxlens/
 
 ### Requirements
 
-- Go 1.22 or later
+- Go 1.26 or later
 - No external runtime dependencies (pure Go, no CGO)
 
 ---
@@ -284,11 +284,11 @@ ctxlens analyze conversation.json --format flame
 Context Flamegraph -- conversation.json
 Total: 45,230 tokens
 
-tool_result (web_search)            6,200 (13.7%) ||||||||||||||||
-system_prompt (main)                5,100 (11.3%) ||||||||||||||
-tool_result (read_file)             4,800 (10.6%) |||||||||||||
-user_message #3                     3,200  (7.1%) |||||||||
-assistant_message #5                2,900  (6.4%) ||||||||
+tool_result (web_search)            6,200 (13.7%) ████████
+system_prompt (main)                5,100 (11.3%) ██████
+tool_result (read_file)             4,800 (10.6%) ██████
+user_message #3                     3,200  (7.1%) ████
+assistant_message #5                2,900  (6.4%) ███
 ...
 ```
 
@@ -440,7 +440,7 @@ Check if your system prompt is too long and eating into your context budget.
 
 ```bash
 ctxlens analyze api-request.json | grep "System Prompt"
-# System Prompt       12,500   38.2%  $0.038   ||||||||||||||||||||
+# System Prompt       12,500   38.2%  $0.038   ███████░░░░░░░░░░░░░
 ```
 
 ### 3. Tool Result Trimming

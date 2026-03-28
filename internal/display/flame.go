@@ -5,6 +5,7 @@ import (
 	"io"
 	"sort"
 	"strings"
+	"unicode/utf8"
 
 	"github.com/JSLEEKR/ctxlens/internal/analyzer"
 )
@@ -52,8 +53,9 @@ func RenderFlame(w io.Writer, result *analyzer.AnalysisResult) {
 }
 
 func truncate(s string, maxLen int) string {
-	if len(s) <= maxLen {
+	if utf8.RuneCountInString(s) <= maxLen {
 		return s
 	}
-	return s[:maxLen-3] + "..."
+	runes := []rune(s)
+	return string(runes[:maxLen-3]) + "..."
 }

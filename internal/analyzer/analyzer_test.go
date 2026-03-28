@@ -244,12 +244,12 @@ func TestAnalyze_DefaultProvider(t *testing.T) {
 	a := newTestAnalyzer()
 	result := a.Analyze(conv, "test.json")
 
-	// Should default to anthropic/claude-sonnet-4
-	if result.Provider != "anthropic" {
-		t.Errorf("expected default provider anthropic, got %s", result.Provider)
+	// Should default to openai/gpt-4o since format is "openai"
+	if result.Provider != "openai" {
+		t.Errorf("expected default provider openai, got %s", result.Provider)
 	}
-	if result.Model != "claude-sonnet-4" {
-		t.Errorf("expected default model claude-sonnet-4, got %s", result.Model)
+	if result.Model != "gpt-4o" {
+		t.Errorf("expected default model gpt-4o, got %s", result.Model)
 	}
 }
 

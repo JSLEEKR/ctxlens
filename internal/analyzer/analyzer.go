@@ -12,6 +12,15 @@ import (
 // DefaultModelLimit is the default context window size (200K tokens).
 const DefaultModelLimit = 200000
 
+// ModelContextLimits maps known models to their context window sizes.
+var ModelContextLimits = map[string]int{
+	"claude-sonnet-4":   200000,
+	"claude-opus-4":     200000,
+	"gpt-4o":            128000,
+	"gpt-4o-mini":       128000,
+	"gemini-2.0-flash":  1000000,
+}
+
 // TopSegmentCount is how many top segments to return.
 const TopSegmentCount = 5
 
@@ -62,24 +71,42 @@ func (a *Analyzer) Analyze(conv *parser.Conversation, source string) *AnalysisRe
 			result.EstimatedCost += cost
 		}
 	} else if a.pricer != nil {
-		// Default to anthropic/claude-sonnet-4
+		// Determine fallback provider/model based on detected format
+		fallbackProvider, fallbackModel := defaultForFormat(conv.Format)
 		for cat, tokens := range result.ByCategory {
-			cost := a.pricer.CalculateCost("anthropic", "claude-sonnet-4", tokens, true)
+			cost := a.pricer.CalculateCost(fallbackProvider, fallbackModel, tokens, true)
 			result.CostByCategory[cat] = cost
 			result.EstimatedCost += cost
 		}
 		if result.Provider == "" {
-			result.Provider = "anthropic"
+			result.Provider = fallbackProvider
 		}
 		if result.Model == "" {
-			result.Model = "claude-sonnet-4"
+			result.Model = fallbackModel
 		}
+	}
+
+	// Set model-specific context limit
+	if limit, ok := ModelContextLimits[conv.Model]; ok {
+		result.ModelLimit = limit
 	}
 
 	// Get top segments
 	result.TopSegments = a.topSegments(result.Segments, TopSegmentCount)
 
 	return result
+}
+
+// defaultForFormat returns the default provider and model for a given format.
+func defaultForFormat(format string) (provider, model string) {
+	switch format {
+	case "openai":
+		return "openai", "gpt-4o"
+	case "google":
+		return "google", "gemini-2.0-flash"
+	default:
+		return "anthropic", "claude-sonnet-4"
+	}
 }
 
 func (a *Analyzer) decomposeMessage(msg parser.Message) []Segment {

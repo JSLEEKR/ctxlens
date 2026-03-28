@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"path/filepath"
+	"unicode/utf8"
 
 	"github.com/spf13/cobra"
 
@@ -160,7 +162,7 @@ func topCmd() *cobra.Command {
 				if entry.IsDir() {
 					continue
 				}
-				path := dir + "/" + entry.Name()
+				path := filepath.Join(dir, entry.Name())
 				data, err := readFile(path)
 				if err != nil || len(data) == 0 {
 					continue
@@ -231,10 +233,11 @@ func sortResults[T any](s []T, less func(a, b T) bool) {
 }
 
 func truncateName(s string, max int) string {
-	if len(s) <= max {
+	if utf8.RuneCountInString(s) <= max {
 		return s
 	}
-	return s[:max-3] + "..."
+	runes := []rune(s)
+	return string(runes[:max-3]) + "..."
 }
 
 func providersCmd() *cobra.Command {

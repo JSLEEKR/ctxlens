@@ -92,6 +92,8 @@ func (p *JSONLParser) Parse(data []byte) (*Conversation, error) {
 			conv.Provider = "anthropic"
 		} else if strings.Contains(conv.Model, "gpt") {
 			conv.Provider = "openai"
+		} else if strings.Contains(conv.Model, "gemini") {
+			conv.Provider = "google"
 		}
 	}
 
