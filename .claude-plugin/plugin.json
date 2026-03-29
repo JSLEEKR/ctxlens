@@ -1,0 +1,9 @@
+{
+  "name": "ctxlens",
+  "description": "Profile LLM context windows — see where your tokens are spent",
+  "version": "1.0.0",
+  "author": { "name": "JSLEEKR" },
+  "repository": "https://github.com/JSLEEKR/ctxlens",
+  "license": "MIT",
+  "keywords": ["llm", "tokens", "context-window", "profiler", "cost"]
+}
